@@ -1,0 +1,20 @@
+{
+  "name": "hotlog/php-client",
+  "description": "Hotlog php client",
+  "keywords": ["log", "logging"],
+  "type": "library",
+  "version": "1.0.0",
+  "license": "MIT",
+  "require": {
+    "ext-curl": "*"
+  },
+  "authors": [
+    {
+      "name": "Nicolas Duck",
+      "email": "snicolas.du@gmail.com"
+    }
+  ],
+  "autoload": {
+    "files": ["Hotlog.php"]
+  }
+}
