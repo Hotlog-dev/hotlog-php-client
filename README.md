@@ -7,6 +7,7 @@
 1. Set the required ENV variables
 
 ```
+HOTLOG_ENABLED=1
 HOTLOG_URL='http://localhost:8090'
 HOTLOG_CLIENT_ID='my_php_project'
 HOTLOG_CLIENT_NAME='my_php_project'

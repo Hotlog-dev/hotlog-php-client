@@ -17,7 +17,7 @@ class Hotlog
         if ($depth > 5)
         {
             return [
-                '_hotlog' => $output['_deburger'],
+                '_hotlog' => $output['_hotlog'],
                 '#hotlog' => 'Max depth reached.',
             ];
         }
@@ -40,7 +40,14 @@ class Hotlog
     private static function parseProperty(&$output, $depth, $object, $property, $prefix = '')
     {
         $property->setAccessible(true);
-        $value = $property->getValue($object);
+        if ($property->isInitialized($object)) {
+            $value = $property->getValue($object);
+        } else {
+            $value = [
+                '_type' => 'Hotlog::message',
+                '_preview'=> 'Typed property not initialized.'
+            ];
+        }
         $type = is_object($value)
             ? self::TYPE_OBJECT
             : gettype($value);
@@ -48,10 +55,10 @@ class Hotlog
         {
             case self::TYPE_OBJECT:
                 $_output = [];
-                $output[$prefix . $property->getName()] = self::parse($property->getValue($object),$_output , $depth);
+                $output[$prefix . $property->getName()] = self::parse($value,$_output , $depth);
                 break;
             default:
-                $output[$prefix . $property->getName()] = $property->getValue($object);
+                $output[$prefix . $property->getName()] = $value;
                 break;
         }
     }
@@ -87,6 +94,9 @@ class Hotlog
      */
     public static function dump($var)
     {
+        if(!(bool)$_ENV['HOTLOG_ENABLED']){
+            return;
+        }
         $ch = curl_init();
         $parameters = [
             'url'  => $_ENV['HOTLOG_URL'],
