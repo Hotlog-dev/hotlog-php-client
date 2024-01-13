@@ -3,7 +3,6 @@
   "description": "Hotlog php client",
   "keywords": ["log", "logging"],
   "type": "library",
-  "version": "1.1.0",
   "license": "MIT",
   "require": {
     "ext-curl": "*"
